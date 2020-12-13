@@ -137,9 +137,10 @@ Output:
     
     - Depoy code and test with postman:
    Encrypted key:
-   ![picture](img/ssm.png)
-   Depoly again, after adding ~true after ssm parameter: 
-   ![picture](img/true.png) 
+![picture](img/ssm.png)
+   
+Depoly again, after adding ~true after ssm parameter:    
+![picture](img/true.png) 
 
 
 **Task 8 Webhook
@@ -165,7 +166,7 @@ create a new lambda function for Webhook with SNS as the trigger //using slack f
         })
     
     - Add SNS as trigger for Webhook lambda function to send alarm message to webhook/slack
-    ![picture](img/webhook.png)
+![picture](img/webhook.png)
   
 
 

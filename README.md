@@ -68,10 +68,12 @@ setup SNS topics and verify recepient email address
 =======
 ![picture](img/SNStoemail.png)
 
-###### Task 3 Test deployment 
+Task 3 Test deployment 
 =======
+
 ![picture](img/SNStoemail.png)
-###### Task 4 Deploy in AWS a second region 
+
+Task 4 Deploy in AWS a second region 
 =======
 ```
 $ serverless deploy --region <aws-region>
@@ -137,20 +139,21 @@ Depoy code and test with postman - Encrypted key:
    
 Depoly again, after adding ~true after ssm parameter:
 =======
-![picture](img/true.png) 
+![picture](img/sstrue.png) 
 
 
-###### Task 8 Webhook
+Task 8 Webhook
+=======
 
 create a new lambda function for Webhook with SNS as the trigger //using slack for testing
 =======
-- 
-    ** lambda function for webhook
-    #!/usr/bin/python3.6
-    import urllib3
-    import json
-    http = urllib3.PoolManager()
-    def lambda_handler(event, context):
+
+-    ** lambda function for webhook
+     #!/usr/bin/python3.6
+     import urllib3
+     import json
+     http = urllib3.PoolManager()
+     def lambda_handler(event, context):
         url = "https://webhook.site/86c4f822-d880-4226-b922-4a5da849a543"
         msg = {
             "text": event['Records'][0]['Sns']['Message'],
@@ -164,7 +167,6 @@ create a new lambda function for Webhook with SNS as the trigger //using slack f
             "response": resp.data
         })
    
-
 Add SNS as trigger for Webhook lambda function to send alarm message to webhook
 =======
 ![picture](img/webtrigger.png)
@@ -172,6 +174,9 @@ Add SNS as trigger for Webhook lambda function to send alarm message to webhook
 - Add SNS as trigger for Webhook lambda function to send alarm message to webhook/used slack webhook as testing in below screen shot
 ![picture](img/webhook.png)
   
-
+References:
+https://www.serverless.com/framework/docs/
+https://github.com/mavi888/serverless-parameter-store/blob/master/serverless.yml
+https://docs.aws.amazon.com/cli/latest/reference/codebuild/create-webhook.html
 
 

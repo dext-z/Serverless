@@ -90,77 +90,35 @@ $ serverless deploy --region <aws-region>
 
 ###### Task 6 Setup ReadOnly access IAM role for ops team
 
-- Add opsRole with read-only policy in serverless.yml
-    resources:
-  Resources:
-  statusCodeTable:
-    Type: AWS::DynamoDB::table
-    Properties:
-      TableName: statusCodeTable
-      AttributeDefinitions: 
-        - AttributeName: "statuscode"
-          AttributeType: "S"
-  AlarmSNSTopic:
-    Type: AWS::SNS::Topic
-    Properties:
-      TopicName: Slibreach
-      Subscription:
-        - Protocol: email
-          Endpoint: !Ref dextdz@gmail.com
-  OpsIAM:
-      Type: AWS::IAM::Role
-      Properties:
-        RoleName: OpsIAM
-        Path: /
-        AssumeRolePolicyDocument: 
-          Version: '2017'
-          Statement: 
-            - Effect: Allow
-              Principal:
-                Service:
-                  - cloudwatch.amazonaws.com
-              Action: 
-                - sts:AssumeRole
-        ManagedPolicyArns:
-          - arn:aws:iam::aws:policy/CloudWatchReadOnlyAccess
-
-
-![picture](img/webhook.png)
+![picture](img/IAM.png)
 ###### Task 7 Using KMS to store secret parameters
 
 Generate KeyID in ssm in cli:
+=======
 
     aws kms create-key --description kms-test --region us-east-1
-
-- Output:
+Output:
+=======
     "KeyMetadata": {
             "AWSAccountId": "516627408046",
             "KeyId": "72c32c35-fb1f-4085-81f4-f45276f8971b",
-            "Arn": "arn:aws:kms:us-east-1:516627408046:key/72c32c35-fb1f-4085-81f4-f45276f8971b",
-            "CreationDate": "2020-12-13T19:58:23.522000+11:00",
-            "Enabled": true,
-            "Description": "kms-test",
-            "KeyUsage": "ENCRYPT_DECRYPT",
-            "KeyState": "Enabled",
-            "Origin": "AWS_KMS",
-            "KeyManager": "CUSTOMER",
-            "CustomerMasterKeySpec": "SYMMETRIC_DEFAULT",
-            "EncryptionAlgorithms": [
-                "SYMMETRIC_DEFAULT"
             ]
         }
 
 Use the "KeyID" from previouse output to encrypt the key "newkeysssss"
+=======
 
     aws ssm put-parameter --name /kms-test/value1 --value "newkeysssss" --type SecureString --key-id "72c32c35-fb1f-4085-81f4-f45276f8971b" --region us-east-1 --overwrite
     
--    output:
+output:
+=======
         {
             "Version": 2,
             "Tier": "Standard"
         }
     
 - add kms.js handler and ssm encrpted parameter in yaml file
+=======
 - 
     custom:
     settings:
@@ -174,24 +132,25 @@ Use the "KeyID" from previouse output to encrypt the key "newkeysssss"
     region: us-east-1
     environment: ${self:custom.settings}
     
-<<<<<<< HEAD
 Depoy code and test with postman:
-
+=======
 Encrypted key:
 ![picture](img/ssm.png)
 
 Depoly again, after adding ~true after ssm parameter: 
 =======
-    - Depoy code and test with postman:
-   Encrypted key:
+Depoy code and test with postman - Encrypted key:
+=======
 ![picture](img/ssm.png)
    
-Depoly again, after adding ~true after ssm parameter:    
+Depoly again, after adding ~true after ssm parameter:
+=======
 >>>>>>> f0ea06c7b3413e743dda73a2a64a84397f2f9327
 ![picture](img/true.png) 
 
 
 ###### Task 8 Webhook
+=======
 create a new lambda function for Webhook with SNS as the trigger //using slack for testing
 - 
     
@@ -213,17 +172,14 @@ create a new lambda function for Webhook with SNS as the trigger //using slack f
             "status_code": resp.status, 
             "response": resp.data
         })
-    
-<<<<<<< HEAD
-- 
+   
+
 Add SNS as trigger for Webhook lambda function to send alarm message to webhook
+=======
 ![picture](img/webtrigger.png)
 
-    - used slack webhook as testing in below screen shot
-
+- Add SNS as trigger for Webhook lambda function to send alarm message to webhook/used slack webhook as testing in below screen shot
 =======
-    - Add SNS as trigger for Webhook lambda function to send alarm message to webhook/slack
->>>>>>> f0ea06c7b3413e743dda73a2a64a84397f2f9327
 ![picture](img/webhook.png)
   
 

@@ -1,8 +1,16 @@
 service: aws-node-rest-api
 
+custom:
+  settings:
+   #SECRET_VALUE: ${ssm:/kms-test/value1}
+   SECRET_VALUE: ${ssm:/kms-test/value1~true}
+
 provider:
   name: aws
   runtime: nodejs12.x
+  profile: default
+  region: us-east-1
+  environment: ${self:custom.settings}
 
 functions:
   hello:
@@ -10,4 +18,10 @@ functions:
     events:
       - http:
           path: /
+          method: get
+  kms:  
+    handler: kms.kms
+    events:
+      - http:
+          path: / 
           method: get

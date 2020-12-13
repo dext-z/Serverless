@@ -174,12 +174,20 @@ Use the "KeyID" from previouse output to encrypt the key "newkeysssss"
     region: us-east-1
     environment: ${self:custom.settings}
     
+<<<<<<< HEAD
 Depoy code and test with postman:
 
 Encrypted key:
 ![picture](img/ssm.png)
 
 Depoly again, after adding ~true after ssm parameter: 
+=======
+    - Depoy code and test with postman:
+   Encrypted key:
+![picture](img/ssm.png)
+   
+Depoly again, after adding ~true after ssm parameter:    
+>>>>>>> f0ea06c7b3413e743dda73a2a64a84397f2f9327
 ![picture](img/true.png) 
 
 
@@ -206,12 +214,16 @@ create a new lambda function for Webhook with SNS as the trigger //using slack f
             "response": resp.data
         })
     
+<<<<<<< HEAD
 - 
 Add SNS as trigger for Webhook lambda function to send alarm message to webhook
 ![picture](img/webtrigger.png)
 
     - used slack webhook as testing in below screen shot
 
+=======
+    - Add SNS as trigger for Webhook lambda function to send alarm message to webhook/slack
+>>>>>>> f0ea06c7b3413e743dda73a2a64a84397f2f9327
 ![picture](img/webhook.png)
   
 

@@ -139,7 +139,7 @@ Depoy code and test with postman - Encrypted key:
    
 Depoly again, after adding ~true after ssm parameter:
 =======
-![picture](img/sstrue.png) 
+![picture](img/ssmtrue.png) 
 
 
 Task 8 Webhook

@@ -26,7 +26,8 @@ Run this command to initialize a new project in a new working directory.
 
 **Deploy**
 
-###### Task 1 Deploy in AWS account
+Task 1 Deploy in AWS account
+=======
 ```
 $ serverless deploy
 ```
@@ -51,23 +52,27 @@ or to target a specific region
 serverless invoke local --function hello
 ```
 
-**##### Test with postman**
+Test with postman**
+=======
 
 ![picture](img/postman.png)
-
-###### Task 2 Monitoring using cloudwatch and SNS*
+Task 2 Monitoring using cloudwatch and SNS*
+=======
     - set new Test event to test the lambda function 
     - setup CloudWatch metrics monitoring in CloudWatch
         - enable cross-region function for cloudwatch for both region monitoring
     - setup Alarms for over 9 error StatsCode in period of 5 minutes, named SliBreach
     - setup SNS topic to receive email when SliBreach alarm is triggered
 ![picture](img/SNStopic.png)
-    - setup SNS topics and verify recepient email address
+setup SNS topics and verify recepient email address
+=======
 ![picture](img/SNStoemail.png)
 
 ###### Task 3 Test deployment 
+=======
 ![picture](img/SNStoemail.png)
 ###### Task 4 Deploy in AWS a second region 
+=======
 ```
 $ serverless deploy --region <aws-region>
 ```
@@ -85,13 +90,16 @@ $ serverless deploy --region <aws-region>
     hello: aws-node-rest-api-dev-hello
 
 ###### Task 5 CloudWatch dashboard for both region with cross-region monigoring enabled
+=======
 ![picture](img/cloudwatchdashboard.png)
 ![picture](img/cloudwatchalarm.png)
 
 ###### Task 6 Setup ReadOnly access IAM role for ops team
+=======
 
 ![picture](img/IAM.png)
 ###### Task 7 Using KMS to store secret parameters
+=======
 
 Generate KeyID in ssm in cli:
 =======
@@ -119,41 +127,24 @@ output:
     
 - add kms.js handler and ssm encrpted parameter in yaml file
 =======
-- 
-    custom:
-    settings:
     #SECRET_VALUE: ${ssm:/kms-test/value1}
     SECRET_VALUE: ${ssm:/kms-test/value1~true}
-
-    provider:
-    name: aws
-    runtime: nodejs12.x
-    profile: default
-    region: us-east-1
     environment: ${self:custom.settings}
-    
-Depoy code and test with postman:
-=======
-Encrypted key:
-![picture](img/ssm.png)
 
-Depoly again, after adding ~true after ssm parameter: 
-=======
 Depoy code and test with postman - Encrypted key:
 =======
 ![picture](img/ssm.png)
    
 Depoly again, after adding ~true after ssm parameter:
 =======
->>>>>>> f0ea06c7b3413e743dda73a2a64a84397f2f9327
 ![picture](img/true.png) 
 
 
 ###### Task 8 Webhook
-=======
+
 create a new lambda function for Webhook with SNS as the trigger //using slack for testing
+=======
 - 
-    
     ** lambda function for webhook
     #!/usr/bin/python3.6
     import urllib3
@@ -179,7 +170,6 @@ Add SNS as trigger for Webhook lambda function to send alarm message to webhook
 ![picture](img/webtrigger.png)
 
 - Add SNS as trigger for Webhook lambda function to send alarm message to webhook/used slack webhook as testing in below screen shot
-=======
 ![picture](img/webhook.png)
   
 

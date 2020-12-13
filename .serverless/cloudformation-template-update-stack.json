@@ -167,7 +167,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aws-node-rest-api/dev/1607859439021-2020-12-13T11:37:19.021Z/aws-node-rest-api.zip"
+          "S3Key": "serverless/aws-node-rest-api/dev/1607863234115-2020-12-13T12:40:34.115Z/aws-node-rest-api.zip"
         },
         "Handler": "handler.hello",
         "Runtime": "nodejs12.x",
@@ -190,14 +190,14 @@
         "HelloLogGroup"
       ]
     },
-    "HelloLambdaVersioni4GufOWJlwo1EmQZi3dbpuQNMBgDQXshX6M3paxo": {
+    "HelloLambdaVersion0jFcrNnjaRquzJr2LUVBq1IMKtIABPwKX3wuT0jsM": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "HelloLambdaFunction"
         },
-        "CodeSha256": "lu0GkijRp5CLQBDMis5c1qP7mWl+RjV+Y2htlyWmaFk="
+        "CodeSha256": "739sGnjAEMi4BlOhjKzRzcy/BNxtX2Jp7RPIaaqvNwQ="
       }
     },
     "KmsLambdaFunction": {
@@ -207,7 +207,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aws-node-rest-api/dev/1607859439021-2020-12-13T11:37:19.021Z/aws-node-rest-api.zip"
+          "S3Key": "serverless/aws-node-rest-api/dev/1607863234115-2020-12-13T12:40:34.115Z/aws-node-rest-api.zip"
         },
         "Handler": "kms.kms",
         "Runtime": "nodejs12.x",
@@ -230,14 +230,14 @@
         "KmsLogGroup"
       ]
     },
-    "KmsLambdaVersiongHOCjq5D9TTH9toZ6MVF1MBZc0C8LoHlQ9SwiHSA8": {
+    "KmsLambdaVersionuAW58864N5E2fJPJFeuQnWGjllY1UZ7W6XfM5PChjc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "KmsLambdaFunction"
         },
-        "CodeSha256": "lu0GkijRp5CLQBDMis5c1qP7mWl+RjV+Y2htlyWmaFk="
+        "CodeSha256": "739sGnjAEMi4BlOhjKzRzcy/BNxtX2Jp7RPIaaqvNwQ="
       }
     },
     "ApiGatewayRestApi": {
@@ -298,7 +298,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1607859434662": {
+    "ApiGatewayDeployment1607863230246": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -384,6 +384,56 @@
           ]
         }
       }
+    },
+    "opsRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "RoleName": "opsRole0",
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com",
+                  "cloudwatch.amazonaws.com"
+                ]
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": "opsPolicy",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "autoscaling:Describe*",
+                    "cloudwatch:Describe*",
+                    "cloudwatch:Get*",
+                    "cloudwatch:List*",
+                    "logs:Get*",
+                    "logs:List*",
+                    "logs:StartQuery",
+                    "logs:StopQuery",
+                    "logs:Describe*",
+                    "logs:TestMetricFilter",
+                    "logs:FilterLogEvents",
+                    "sns:Get*",
+                    "sns:List*"
+                  ],
+                  "Resource": "*"
+                }
+              ]
+            }
+          }
+        ]
+      }
     }
   },
   "Outputs": {
@@ -395,13 +445,13 @@
     "HelloLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloLambdaVersioni4GufOWJlwo1EmQZi3dbpuQNMBgDQXshX6M3paxo"
+        "Ref": "HelloLambdaVersion0jFcrNnjaRquzJr2LUVBq1IMKtIABPwKX3wuT0jsM"
       }
     },
     "KmsLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "KmsLambdaVersiongHOCjq5D9TTH9toZ6MVF1MBZc0C8LoHlQ9SwiHSA8"
+        "Ref": "KmsLambdaVersionuAW58864N5E2fJPJFeuQnWGjllY1UZ7W6XfM5PChjc"
       }
     },
     "ServiceEndpoint": {

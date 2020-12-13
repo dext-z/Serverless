@@ -25,3 +25,41 @@ functions:
       - http:
           path: / 
           method: get
+
+# add ops read-only Iam with policy
+resources:
+  Resources:
+    opsRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: opsRole0
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+                  - cloudwatch.amazonaws.com
+              Action: sts:AssumeRole
+        Policies:
+          - PolicyName: opsPolicy
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - autoscaling:Describe*
+                    - cloudwatch:Describe*
+                    - cloudwatch:Get*
+                    - cloudwatch:List*
+                    - logs:Get*
+                    - logs:List*
+                    - logs:StartQuery
+                    - logs:StopQuery
+                    - logs:Describe*
+                    - logs:TestMetricFilter
+                    - logs:FilterLogEvents
+                    - sns:Get*
+                    - sns:List*
+                  Resource: "*"

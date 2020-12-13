@@ -26,7 +26,7 @@ Run this command to initialize a new project in a new working directory.
 
 **Deploy**
 
-
+###### Task 1 Deploy in AWS account
 ```
 $ serverless deploy
 ```
@@ -44,59 +44,95 @@ $ serverless deploy
     hello: aws-node-rest-api-dev-hello
 
 or to target a specific region
-```
-$ serverless deploy --region <aws-region>
-```
-Service Information
-service: aws-node-rest-api
-stage: dev
-region: ap-southeast-2
-stack: aws-node-rest-api-dev
-resources: 10
-api keys:
-  None
-endpoints:
-  GET - https://50iqidwddh.execute-api.ap-southeast-2.amazonaws.com/dev/
-functions:
-  hello: aws-node-rest-api-dev-hello
-**Invoke the function locally.**
 
+
+**Invoke the function locally.**
 ```
 serverless invoke local --function hello
 ```
 
-**Invoke the function**
-
-```
-curl https://xxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/
-```
-
-**Test with postman**
+**##### Test with postman**
 
 ![picture](img/postman.png)
 
-**Task 2 Monitoring using cloudwatch and SNS*
+###### Task 2 Monitoring using cloudwatch and SNS*
     - set new Test event to test the lambda function 
-
     - setup CloudWatch metrics monitoring in CloudWatch
         - enable cross-region function for cloudwatch for both region monitoring
     - setup Alarms for over 9 error StatsCode in period of 5 minutes, named SliBreach
     - setup SNS topic to receive email when SliBreach alarm is triggered
-    ![picture](img/SNStopic.png)
+![picture](img/SNStopic.png)
     - setup SNS topics and verify recepient email address
-    ![picture](img/SNStoemail.png)
+![picture](img/SNStoemail.png)
 
-**Task 5 CloudWatch dashboard for both region with cross-region monigoring enabled
+###### Task 3 Test deployment 
+![picture](img/SNStoemail.png)
+###### Task 4 Deploy in AWS a second region 
+```
+$ serverless deploy --region <aws-region>
+```
+    Service Information
+    service: aws-node-rest-api
+    stage: dev
+    region: ap-southeast-2
+    stack: aws-node-rest-api-dev
+    resources: 10
+    api keys:
+    None
+    endpoints:
+    GET - https://50iqidwddh.execute-api.ap-southeast-2.amazonaws.com/dev/
+    functions:
+    hello: aws-node-rest-api-dev-hello
+
+###### Task 5 CloudWatch dashboard for both region with cross-region monigoring enabled
 ![picture](img/cloudwatchdashboard.png)
 ![picture](img/cloudwatchalarm.png)
 
-**Task 6 Setup ReadOnly access IAM role for ops team
+###### Task 6 Setup ReadOnly access IAM role for ops team
 
-**Task 7 Using KMS to store secret parameters
+- Add opsRole with read-only policy in serverless.yml
+    resources:
+  Resources:
+  statusCodeTable:
+    Type: AWS::DynamoDB::table
+    Properties:
+      TableName: statusCodeTable
+      AttributeDefinitions: 
+        - AttributeName: "statuscode"
+          AttributeType: "S"
+  AlarmSNSTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: Slibreach
+      Subscription:
+        - Protocol: email
+          Endpoint: !Ref dextdz@gmail.com
+  OpsIAM:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: OpsIAM
+        Path: /
+        AssumeRolePolicyDocument: 
+          Version: '2017'
+          Statement: 
+            - Effect: Allow
+              Principal:
+                Service:
+                  - cloudwatch.amazonaws.com
+              Action: 
+                - sts:AssumeRole
+        ManagedPolicyArns:
+          - arn:aws:iam::aws:policy/CloudWatchReadOnlyAccess
 
-Generate KeyID:
-aws kms create-key --description kms-test --region us-east-1
-Output:
+
+![picture](img/webhook.png)
+###### Task 7 Using KMS to store secret parameters
+
+Generate KeyID in ssm in cli:
+
+    aws kms create-key --description kms-test --region us-east-1
+
+- Output:
     "KeyMetadata": {
             "AWSAccountId": "516627408046",
             "KeyId": "72c32c35-fb1f-4085-81f4-f45276f8971b",
@@ -114,14 +150,17 @@ Output:
             ]
         }
 
+Use the "KeyID" from previouse output to encrypt the key "newkeysssss"
+
     aws ssm put-parameter --name /kms-test/value1 --value "newkeysssss" --type SecureString --key-id "72c32c35-fb1f-4085-81f4-f45276f8971b" --region us-east-1 --overwrite
-    output:
+    
+-    output:
         {
             "Version": 2,
             "Tier": "Standard"
         }
     
-    -add kms.js handler and ssm encrpted parameter in yaml file
+- add kms.js handler and ssm encrpted parameter in yaml file
 - 
     custom:
     settings:
@@ -135,15 +174,18 @@ Output:
     region: us-east-1
     environment: ${self:custom.settings}
     
-    - Depoy code and test with postman:
-   Encrypted key:
-   ![picture](img/ssm.png)
-   Depoly again, after adding ~true after ssm parameter: 
-   ![picture](img/true.png) 
+Depoy code and test with postman:
+
+Encrypted key:
+![picture](img/ssm.png)
+
+Depoly again, after adding ~true after ssm parameter: 
+![picture](img/true.png) 
 
 
-**Task 8 Webhook
+###### Task 8 Webhook
 create a new lambda function for Webhook with SNS as the trigger //using slack for testing
+- 
     
     ** lambda function for webhook
     #!/usr/bin/python3.6
@@ -164,8 +206,13 @@ create a new lambda function for Webhook with SNS as the trigger //using slack f
             "response": resp.data
         })
     
-    - Add SNS as trigger for Webhook lambda function to send alarm message to webhook/slack
-    ![picture](img/webhook.png)
+- 
+Add SNS as trigger for Webhook lambda function to send alarm message to webhook
+![picture](img/webtrigger.png)
+
+    - used slack webhook as testing in below screen shot
+
+![picture](img/webhook.png)
   
 
 

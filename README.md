@@ -52,11 +52,11 @@ or to target a specific region
 serverless invoke local --function hello
 ```
 
-Test with postman**
+Test with postman
 =======
 
 ![picture](img/postman.png)
-Task 2 Monitoring using cloudwatch and SNS*
+Task 2 Monitoring using cloudwatch and SNS
 =======
     - set new Test event to test the lambda function 
     - setup CloudWatch metrics monitoring in CloudWatch
@@ -76,7 +76,7 @@ Task 3 Test deployment
 Task 4 Deploy in AWS a second region 
 =======
 ```
-$ serverless deploy --region <aws-region>
+$ serverless deploy --region ap-southeast-2
 ```
     Service Information
     service: aws-node-rest-api
@@ -91,16 +91,16 @@ $ serverless deploy --region <aws-region>
     functions:
     hello: aws-node-rest-api-dev-hello
 
-###### Task 5 CloudWatch dashboard for both region with cross-region monigoring enabled
+Task 5 CloudWatch dashboard for both region with cross-region monigoring enabled
 =======
 ![picture](img/cloudwatchdashboard.png)
 ![picture](img/cloudwatchalarm.png)
 
-###### Task 6 Setup ReadOnly access IAM role for ops team
+Task 6 Setup ReadOnly access IAM role for ops team
 =======
 
 ![picture](img/IAM.png)
-###### Task 7 Using KMS to store secret parameters
+Task 7 Using KMS to store secret parameters
 =======
 
 Generate KeyID in ssm in cli:
@@ -129,10 +129,11 @@ output:
     
 - add kms.js handler and ssm encrpted parameter in yaml file
 =======
-    #SECRET_VALUE: ${ssm:/kms-test/value1}
+    ```
+    SECRET_VALUE: ${ssm:/kms-test/value1}
     SECRET_VALUE: ${ssm:/kms-test/value1~true}
     environment: ${self:custom.settings}
-
+    ```
 Depoy code and test with postman - Encrypted key:
 =======
 ![picture](img/ssm.png)
@@ -144,11 +145,10 @@ Depoly again, after adding ~true after ssm parameter:
 
 Task 8 Webhook
 =======
-
-create a new lambda function for Webhook with SNS as the trigger //using slack for testing
+create a new lambda function for Webhook with SNS as the trigger //using slack webhook for testing
 =======
-
--    ** lambda function for webhook
+```
+     lambda function for webhook
      #!/usr/bin/python3.6
      import urllib3
      import json
@@ -166,17 +166,19 @@ create a new lambda function for Webhook with SNS as the trigger //using slack f
             "status_code": resp.status, 
             "response": resp.data
         })
-   
+ ```
 Add SNS as trigger for Webhook lambda function to send alarm message to webhook
 =======
 ![picture](img/webtrigger.png)
 
-- Add SNS as trigger for Webhook lambda function to send alarm message to webhook/used slack webhook as testing in below screen shot
+used slack webhook as testing in below screen shot
 ![picture](img/webhook.png)
   
 References:
-https://www.serverless.com/framework/docs/
+=======
+```
+https://www.serverless.com/framework/docs/ 
 https://github.com/mavi888/serverless-parameter-store/blob/master/serverless.yml
 https://docs.aws.amazon.com/cli/latest/reference/codebuild/create-webhook.html
-
+```
 

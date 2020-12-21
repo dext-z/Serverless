@@ -44,13 +44,17 @@ $ serverless deploy
     functions:
     hello: aws-node-rest-api-dev-hello
 
-or to target a specific region
-
-
 **Invoke the function locally.**
 ```
 serverless invoke local --function hello
 ```
+## resources deployed
+    - Lambda fucntion
+    - s3
+    - cloudformation stack
+    - cloudwatch logs after invoking function
+    - SNS topic
+    - lambda role
 
 Test with postman
 =======
@@ -66,11 +70,24 @@ Task 2 Monitoring using cloudwatch and SNS
 ![picture](img/SNStopic.png)
 setup SNS topics and verify recepient email address
 =======
-![picture](img/SNStoemail.png)
+![picture](img/sns_inalarm.jpg)
 
 Task 3 Test deployment 
 =======
-
+Add statuscode to console.log and create metric filter for Error - statuscode =400 & Statuscode = 500 to monitor API SLI
+```
+console.log('statusCode = '+ statusCodeValue, messageValue);
+```
+```
+Monitored Metric:
+- MetricNamespace:                     sliBreach
+- MetricName:                          error
+- Dimensions:                         
+- Period:                              300 seconds
+- Statistic:                           Sum
+- Unit:                                not specified
+- TreatMissingData:                    missing
+```
 ![picture](img/SNStoemail.png)
 
 Task 4 Deploy in AWS a second region 
@@ -209,7 +226,6 @@ docker push <account_id>.dkr.ecr.us-east-1.amazonaws.com/aws-node:v1
 # Create lambda function base on ECR image
 ![picture](img/create_lambda.png)
 ![picture](img/lambda-docker.png)
-
 
 References:
 =======

@@ -1,0 +1,15 @@
+{
+  "devDependencies": {
+    "serverless-pseudo-parameters": "^2.5.0",
+    "safe-buffer": "^"
+  },
+  "name": "aws-node-rest-api-v1",
+  "description": "# Add Dockerfile",
+  "version": "1.0.0",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

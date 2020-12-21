@@ -1,5 +1,8 @@
 service: aws-node-rest-api
 
+plugins:
+  - serverless-pseudo-parameters
+
 custom:
   settings:
    #SECRET_VALUE: ${ssm:/kms-test/value1}
@@ -19,16 +22,22 @@ functions:
       - http:
           path: /
           method: get
+      - sns:
+        arn: sliBreach
   kms:  
     handler: kms.kms
     events:
       - http:
           path: / 
           method: get
-
-# add ops read-only Iam with policy
+  
 resources:
   Resources:
+    sliBreach:
+      Type: 'AWS::SNS::Topic'
+      Properties:
+        TopicName: sliBreach
+    # Ops role  
     opsRole:
       Type: AWS::IAM::Role
       Properties:

@@ -167,7 +167,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aws-node-rest-api/dev/1607863234115-2020-12-13T12:40:34.115Z/aws-node-rest-api.zip"
+          "S3Key": "serverless/aws-node-rest-api/dev/1608507625984-2020-12-20T23:40:25.984Z/aws-node-rest-api.zip"
         },
         "Handler": "handler.hello",
         "Runtime": "nodejs12.x",
@@ -190,14 +190,14 @@
         "HelloLogGroup"
       ]
     },
-    "HelloLambdaVersion0jFcrNnjaRquzJr2LUVBq1IMKtIABPwKX3wuT0jsM": {
+    "HelloLambdaVersionTUvm0YRuuYJfNghXJpEO34iPHChiifcFieSHxnfQ": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "HelloLambdaFunction"
         },
-        "CodeSha256": "739sGnjAEMi4BlOhjKzRzcy/BNxtX2Jp7RPIaaqvNwQ="
+        "CodeSha256": "IZzUuPqB+62CUxJFQsWhwM/ctZ/uedtKLoUmuY66HJk="
       }
     },
     "KmsLambdaFunction": {
@@ -207,7 +207,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/aws-node-rest-api/dev/1607863234115-2020-12-13T12:40:34.115Z/aws-node-rest-api.zip"
+          "S3Key": "serverless/aws-node-rest-api/dev/1608507625984-2020-12-20T23:40:25.984Z/aws-node-rest-api.zip"
         },
         "Handler": "kms.kms",
         "Runtime": "nodejs12.x",
@@ -230,14 +230,14 @@
         "KmsLogGroup"
       ]
     },
-    "KmsLambdaVersionuAW58864N5E2fJPJFeuQnWGjllY1UZ7W6XfM5PChjc": {
+    "KmsLambdaVersionjPJ5KfRt8Ged5Uwa3BFC8iUXJ5rABAqdoN9xcMXuw": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "KmsLambdaFunction"
         },
-        "CodeSha256": "739sGnjAEMi4BlOhjKzRzcy/BNxtX2Jp7RPIaaqvNwQ="
+        "CodeSha256": "IZzUuPqB+62CUxJFQsWhwM/ctZ/uedtKLoUmuY66HJk="
       }
     },
     "ApiGatewayRestApi": {
@@ -298,7 +298,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1607863230246": {
+    "ApiGatewayDeployment1608507623460": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -385,6 +385,12 @@
         }
       }
     },
+    "sliBreach": {
+      "Type": "AWS::SNS::Topic",
+      "Properties": {
+        "TopicName": "sliBreach"
+      }
+    },
     "opsRole": {
       "Type": "AWS::IAM::Role",
       "Properties": {
@@ -445,13 +451,13 @@
     "HelloLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "HelloLambdaVersion0jFcrNnjaRquzJr2LUVBq1IMKtIABPwKX3wuT0jsM"
+        "Ref": "HelloLambdaVersionTUvm0YRuuYJfNghXJpEO34iPHChiifcFieSHxnfQ"
       }
     },
     "KmsLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "KmsLambdaVersionuAW58864N5E2fJPJFeuQnWGjllY1UZ7W6XfM5PChjc"
+        "Ref": "KmsLambdaVersionjPJ5KfRt8Ged5Uwa3BFC8iUXJ5rABAqdoN9xcMXuw"
       }
     },
     "ServiceEndpoint": {

@@ -1,0 +1,7 @@
+{
+  "devDependencies": {
+    "serverless-pseudo-parameters": "^2.5.0",
+    "safe-buffer": "^"
+  }
+
+}

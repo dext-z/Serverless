@@ -173,12 +173,50 @@ Add SNS as trigger for Webhook lambda function to send alarm message to webhook
 
 used slack webhook as testing in below screen shot
 ![picture](img/webhook.png)
-  
+
+Task 9  Further improments for the system
+=======
+Added SQS - standard queue for API requests, DynamoDB as trigger for the lambda function, SNS to handle the communication between serverices.
+![picture](img/api_config.png)
+
+Task 10 New for AWS Lambda – Container Image Support
+=======
+# We can also package and deploy Lambda functions as container images use AWS base images  for all the supported Lambda runtimes (Python, Node.js, Java, .NET, Go, Ruby) 
+
+# Add Dockerfile
+
+```
+FROM amazon/aws-lambda-nodejs:12
+COPY app.js package*.json ./
+RUN npm install
+CMD [ "handler.hello" ]
+```
+
+# Build docker image 
+```
+docker build . -t aws-node
+docker tag aws-node-rest-api-v1:v1 <account_id>.dkr.ecr.us-east-1.amazonaws.com/aws-node:latest
+
+```
+# Push docker image to ECR
+```
+aws ecr create-repository --repository-name aws-node --image-scanning-configuration scanOnPush=true --region us-east-1
+aws ecr get-login-password | docker login --username AWS --password-stdin <account_id>.dkr.ecr.us-east-1.amazonaws.com
+docker push <account_id>.dkr.ecr.us-east-1.amazonaws.com/aws-node:v1
+```
+![picture](img/ecr_img.png)
+
+# Create lambda function base on ECR image
+![picture](img/create_lambda.png)
+![picture](img/lambda-docker.png)
+
+
 References:
 =======
 ```
 https://www.serverless.com/framework/docs/ 
 https://github.com/mavi888/serverless-parameter-store/blob/master/serverless.yml
 https://docs.aws.amazon.com/cli/latest/reference/codebuild/create-webhook.html
+https://aws.amazon.com/blogs/aws/new-for-aws-lambda-container-image-support/
 ```
 

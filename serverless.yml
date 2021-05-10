@@ -15,6 +15,12 @@ provider:
   region: us-east-1
   environment: ${self:custom.settings}
 
+  deploymentBucket:
+    name: us-east-1
+    serverSideEncryption: AES256
+    newline1
+    newline
+
 functions:
   hello:
     handler: handler.hello
